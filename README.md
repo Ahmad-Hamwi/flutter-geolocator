@@ -1,3 +1,9 @@
+# Important note about this fork
+If you app is spawning isolates which are connected to Flutter engines, or you're using some plugin that spawns an isolate which connects to a Flutter Engine such as the FCM plugin, chances are you're going to be having a leaked location stream when you terminate the main isolate on the Android platform.\
+In the Android federated plugin, The maintainer keeps track of connected engines and he presumes that the plugin is going to be used on any of them, but it might not be the case in many apps.\
+I'm commenting out the ```return connectedEngines == 0``` check when trying to closing the location service, since I'm only going to be using this service on one isolate.\
+There should be no harm in doing that as mentioned in issue https://github.com/Baseflow/flutter-geolocator/issues/986#issuecomment-1595794794. See [3d9b9e00](https://github.com/Baseflow/flutter-geolocator/commit/3d9b9e00d971197ff334c66afd35452f4639b066) for the edit.
+
 # Flutter geolocator plugin
 
 The Flutter geolocator plugin is built following the federated plugin architecture. A detailed explanation of the federated plugin concept can be found in the [Flutter documentation](https://flutter.dev/docs/development/packages-and-plugins/developing-packages#federated-plugins). This means the geolocator plugin is separated into the following packages:
