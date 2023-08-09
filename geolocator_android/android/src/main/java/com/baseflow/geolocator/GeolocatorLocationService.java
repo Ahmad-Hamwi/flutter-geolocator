@@ -88,7 +88,8 @@ public class GeolocatorLocationService extends Service {
     if(cancellationRequested) {
        return listenerCount == 1;
     }
-    return connectedEngines == 0;
+    // return connectedEngines == 0; // Should be safe to ignore as long as one engine only is using the plugin.
+    return true;
   }
 
   public void flutterEngineConnected() {
